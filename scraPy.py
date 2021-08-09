@@ -13,15 +13,18 @@ soup = BeautifulSoup(r.content, "html.parser")
 
 # finds all the spans with the particular class.
 events = soup.find_all('span', class_ = 'title')
-# dates = soup.find_all('var', class_ = "atc_date_start")
-names = []
-for item in events:
-	names.append(item.text.replace("  ", "").replace("\n", ""))
-	# names.append(item.text.replace("\n          ", "").replace("\n        ", "").replace("\n", ""))
-# 	names.append(item.find("span", class_ = "title").text)
+mesDates = soup.find_all('var', class_ = "atc_date_start")
+names, dates = [], []
 
-for i in range(0, 10):
-	print(names[i])
+for item in events:
+	# .strip() replaces all of the extra whitespace n the line.
+	names.append(item.text.strip().replace("\n", ""))
+for date in mesDates:
+	dates.append(date.text.replace(" 00:00:00", ""))
+
+
+for i in range(0, len(dates)):
+	print(dates[i], " ", names[i])
 
 # print(events[:10])
 # print(names[:10])
